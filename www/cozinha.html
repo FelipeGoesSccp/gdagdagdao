@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forno Bravo - Painel da Cozinha</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Oswald + Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@300;400;700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        oswald: ['Oswald', 'sans-serif'],
+                        lato: ['Lato', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#c0392b',
+                        dark: '#1a1a1a',
+                        muted: '#888888',
+                        footer: '#2c2c2c',
+                        cream: '#fdf6ec',
+                        ember: '#e8580a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdf6ec;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(192,57,43,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(232,88,10,0.04) 0%, transparent 50%);
+        }
+
+        /* Textura sutil tipo papel kraft */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='none'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23c0392b' opacity='0.04'/%3E%3Ccircle cx='3' cy='3' r='0.4' fill='%23c0392b' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        main, header, * { position: relative; z-index: 1; }
+
+        /* Animação de entrada dos cards */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .card-pedido {
+            animation: slideUp 0.35s ease both;
+        }
+
+        /* Badge de status com estilo artesanal */
+        .badge-pendente {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffc107;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.08em;
+        }
+
+        /* Linha decorativa italiana */
+        .divider-italian {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #c0392b;
+            opacity: 0.3;
+        }
+        .divider-italian::before,
+        .divider-italian::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: currentColor;
+        }
+
+        /* Efeito hover no card */
+        .card-pedido:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(192,57,43,0.12), 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        /* Logo text estilo retro */
+        .logo-brand {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #c0392b;
+        }
+        .logo-sub {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        /* Número do pedido com estilo stamp */
+        .pedido-num {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        /* Botão principal com gradiente quente */
+        .btn-pronto {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.06em;
+            box-shadow: 0 3px 10px rgba(39,174,96,0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-pronto:hover {
+            background: linear-gradient(135deg, #229954 0%, #1e8449 100%);
+            box-shadow: 0 5px 16px rgba(39,174,96,0.4);
+            transform: translateY(-1px);
+        }
+
+        /* Cabeçalho da seção de itens */
+        .itens-header {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.1em;
+            color: #c0392b;
+            font-size: 0.75rem;
+        }
+
+        /* Scrollbar discreta */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c0392b44; border-radius: 3px; }
+    </style>
+</head>
+
+<body class="font-lato text-dark w-full m-0 min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-red-100 py-4 px-6 flex justify-between items-center sticky top-0 z-50" style="box-shadow: 0 2px 16px rgba(192,57,43,0.08);">
+        <div class="flex items-center gap-4">
+            <!-- Ícone de forno / pizza como logo fallback -->
+            
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-2xl flex-shrink-0" aria-label="Forno Bravo">
+                <a href="./index.html">
+                🍕
+                </a>
+            </div>
+            <div class="hidden md:block border-l-2 border-red-200 pl-4">
+                <div class="logo-brand text-xl leading-none">Forno Bravo</div>
+                <div class="logo-sub mt-0.5">Painel da Cozinha</div>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div id="status-conexao" class="flex items-center gap-2 text-sm font-bold text-green-600">
+                <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                Online
+            </div>
+            <button onclick="carregarPedidos()"
+                class="border-2 border-primary text-primary px-4 py-2 rounded-full font-bold hover:bg-primary hover:text-white transition-all text-sm"
+                style="font-family: 'Oswald', sans-serif; letter-spacing: 0.06em;">
+                Atualizar
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow p-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-dark uppercase tracking-widest" style="font-family: 'Oswald', sans-serif;">Pedidos Recebidos</h2>
+                    <div class="divider-italian mt-1">
+                        <span class="text-xs" style="font-family: 'Lato', sans-serif; letter-spacing: 0.2em; font-weight: 300;">PIZZARIA</span>
+                    </div>
+                </div>
+                <span id="contador-pedidos" class="border-2 border-primary text-primary px-4 py-1 rounded-full font-bold text-sm" style="font-family: 'Oswald', sans-serif; letter-spacing: 0.06em;">0 pedidos</span>
+            </div>
+
+            <!-- GRID DE PEDIDOS -->
+            <div id="pedidos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Pedidos serão injetados aqui via JavaScript -->
+                <p class="text-muted col-span-full text-center py-10" style="font-family: 'Oswald', sans-serif; letter-spacing: 0.08em;">Carregando pedidos...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JAVASCRIPT: Lógica de Buscar e Exibir Pedidos -->
+    <script>
+        // URL do Backend onde a nova rota foi publicada (na Vercel)
+        const URL_API = 'https://aula-7-vercel-pizza.vercel.app/api/pedidos';
+
+        // Função para buscar os pedidos na API
+        async function carregarPedidos() {
+            const container = document.getElementById('pedidos-container');
+            const contador = document.getElementById('contador-pedidos');
+            const statusConexao = document.getElementById('status-conexao');
+
+            try {
+                // Indicador visual de carregando
+                statusConexao.innerHTML = '<span class="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></span> Atualizando...';
+                statusConexao.className = 'flex items-center gap-2 text-sm font-bold text-yellow-600';
+
+                const resposta = await fetch(URL_API);
+
+                if (!resposta.ok) throw new Error('Erro ao buscar pedidos');
+
+                const pedidos = await resposta.json();
+                renderizarPedidos(pedidos);
+
+                // Atualiza contador
+                contador.innerText = `${pedidos.length} pedido(s)`;
+
+                // Volta o status para online
+                setTimeout(() => {
+                    statusConexao.innerHTML = '<span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span> Online';
+                    statusConexao.className = 'flex items-center gap-2 text-sm font-bold text-green-600';
+                }, 500);
+
+            } catch (erro) {
+                console.error("Erro ao carregar pedidos:", erro);
+                container.innerHTML = `
+                    <div class="col-span-full bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-xl relative" role="alert">
+                      <strong class="font-bold" style="font-family:'Oswald',sans-serif;">Ops!</strong>
+                      <span class="block sm:inline ml-1">Não foi possível carregar os pedidos da nuvem. Verifique a conexão com a API.</span>
+                    </div>`;
+
+                statusConexao.innerHTML = '<span class="w-3 h-3 bg-red-500 rounded-full"></span> Offline';
+                statusConexao.className = 'flex items-center gap-2 text-sm font-bold text-red-600';
+            }
+        }
+
+        // Função para desenhar os pedidos na tela
+        function renderizarPedidos(pedidos) {
+            const container = document.getElementById('pedidos-container');
+            container.innerHTML = '';
+
+            if (pedidos.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full flex flex-col items-center justify-center py-16 opacity-40">
+                        <div class="text-7xl mb-4">🍕</div>
+                        <p class="text-xl font-bold text-dark uppercase tracking-widest" style="font-family:'Oswald',sans-serif;">Nenhum pedido pendente.</p>
+                        <p class="text-muted mt-1 text-sm" style="letter-spacing:0.1em;">O forno está descansando por enquanto!</p>
+                    </div>`;
+                return;
+            }
+
+            // Para cada pedido, cria um Card
+            pedidos.forEach((pedido, index) => {
+                // Tenta transformar a coluna de itens em array caso tenha vindo como texto (JSON) do banco
+                let itens = [];
+                try {
+                    itens = typeof pedido.itens === 'string' ? JSON.parse(pedido.itens) : pedido.itens;
+                } catch (e) {
+                    console.error("Erro ao converter itens do pedido:", e);
+                }
+
+                if (!itens || !Array.isArray(itens)) itens = [];
+
+                // Monta o HTML da lista de itens
+                let htmlItens = itens.map(item => `
+                    <li class="flex justify-between border-b border-amber-100 py-2">
+                        <span class="font-bold text-dark">${item.quantidade || 1}x ${item.nome || 'Produto'}</span>
+                        <span class="text-muted">R$ ${(item.preco || 0).toFixed(2)}</span>
+                    </li>
+                `).join('');
+
+                // Formata a data (se existir)
+                let dataFormatada = 'Data desconhecida';
+                if (pedido.created_at) {
+                    const dataObj = new Date(pedido.created_at);
+                    dataFormatada = dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) + ' — ' + dataObj.toLocaleDateString('pt-BR');
+                }
+
+                // Cria o Card do HTML
+                const card = `
+                    <div class="card-pedido bg-white border border-amber-100 rounded-2xl p-5 flex flex-col transition-all duration-300" style="animation-delay: ${index * 60}ms; box-shadow: 0 4px 16px rgba(192,57,43,0.06);">
+                        
+                        <!-- Cabeçalho do card -->
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h2 class="pedido-num text-xl text-dark leading-none">Pedido <span class="text-primary">#${pedido.id}</span></h2>
+                                <span class="text-xs text-muted mt-0.5 block" style="letter-spacing:0.05em;">${dataFormatada}</span>
+                            </div>
+                            <span class="badge-pendente text-xs font-bold uppercase px-3 py-1 rounded-full">
+                                ${pedido.status || 'Pendente'}
+                            </span>
+                        </div>
+
+                        <!-- Info do cliente -->
+                        <div class="mb-4 bg-amber-50 border border-amber-100 p-3 rounded-xl text-sm">
+                            <p class="mb-1"><strong style="font-family:'Oswald',sans-serif; letter-spacing:0.05em; font-size:0.75rem; color:#c0392b; text-transform:uppercase;">Cliente</strong><br><span class="text-gray-700">${pedido.cliente_nome || 'Não informado'}</span></p>
+                            <p class="mt-2"><strong style="font-family:'Oswald',sans-serif; letter-spacing:0.05em; font-size:0.75rem; color:#c0392b; text-transform:uppercase;">Endereço</strong><br><span class="text-gray-700">${pedido.cliente_endereco || 'Não informado'}</span></p>
+                        </div>
+
+                        <!-- Lista de itens -->
+                        <div class="flex-grow mb-4">
+                            <h3 class="itens-header mb-2 uppercase">🍕 Itens do Pedido</h3>
+                            <ul class="text-sm">
+                                ${htmlItens}
+                            </ul>
+                        </div>
+
+                        <!-- Rodapé do card -->
+                        <div class="mt-auto pt-4 border-t border-amber-100 flex justify-between items-center">
+                            <div class="flex flex-col">
+                                <span class="text-xs text-muted uppercase" style="font-family:'Oswald',sans-serif; letter-spacing:0.1em;">Total</span>
+                                <span class="font-bold text-xl text-primary" style="font-family:'Oswald',sans-serif;">R$ ${(pedido.total || 0).toFixed(2)}</span>
+                            </div>
+                            <button onclick="concluirPedido(this)" class="btn-pronto text-white px-5 py-2 rounded-full text-sm uppercase">
+                                Pronto ✓
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // Função simulação para o botão de concluir
+        function concluirPedido(btn) {
+            const card = btn.closest('.card-pedido');
+            card.classList.add('opacity-40', 'grayscale', 'pointer-events-none');
+            btn.innerText = 'Finalizado';
+            btn.style.background = '#aaa';
+            btn.style.boxShadow = 'none';
+        }
+
+        // Inicia carregando os pedidos e configura atualização automática a cada 10 segundos
+        carregarPedidos();
+        setInterval(carregarPedidos, 10000);
+    </script>
+</body>
+
+</html>

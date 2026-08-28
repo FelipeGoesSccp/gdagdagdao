@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goes pizzaria - Melhor pizzaria de brigadeiro tobias 👍</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- config pwa -->
+     <link rel="stylesheet" href="manifest.json">
+     <meta name="theme-color" content="#ca3c3f">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+     <link rel="apple-touch-icon" href="assets/images/logopwa.png">
+     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logopwa.png">
+     <link rel="stylesheet" type="image/png" sizes="16x16" href="assets/images/logopwa.png">
+     <link rel="stylesheet" type="image/png" href="assets/images/logopwa.png">
+     <link rel="shortcut icon" href="assets/images/logopwa.png" type="image/x-icon">
+     <meta name="msappaplication-TileImage" content="assets/img/logopwa.png">
+     <meta property="og:image" content="assets/img/logopwa.png">
+     <!-- termino -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'barlow': ['Barlow', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#ca3c3f',
+                        dark: '#222222',
+                        muted: '#999999',
+                        footer: '#333333',
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="font-barlow text-[#222222] overflow-x-hidden m-0 w-screen">
+
+    <header class="w-full bg-white shadow-sm py-4 px-6 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+
+            
+            <h1 class="max-w-[150px] md:max-w-[200px]">
+                <img src="./assets/images/logopizza.png" alt="Haruy Sushi" class="w-full">
+            </h1>
+           </a>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8 font-bold text-sm uppercase tracking-wider">
+                    <li><a href="#cardapio" class="hover:text-primary transition-colors">Cardápio</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Sobre</a></li>
+                    <li><a href="#contato" class="hover:text-primary transition-colors">Contato</a></li>
+                </ul>
+            </nav>
+
+            <button id="menuBtn" class="md:hidden text-[#333333] focus:outline-none p-2" aria-label="Abrir Menu">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div id="mobileMenu"
+        class="fixed top-0 right-[-100%] w-[70%] h-full bg-white shadow-lg transition-all duration-300 p-8 md:hidden z-[100]">
+        <button id="closeBtn" class="text-2xl mb-6 font-bold">✕</button>
+        <ul class="flex flex-col gap-6 text-lg font-bold uppercase">
+            <li><a href="#cardapio" class="hover:text-primary">Cardápio</a></li>
+            <li><a href="#" class="hover:text-primary">Sobre</a></li>
+            <li><a href="#contato" class="hover:text-primary">Contato</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section
+            class="flex flex-col md:flex-row items-center justify-center text-center md:text-left px-6 py-12 md:py-20 max-w-7xl mx-auto gap-8">
+            <div class="w-full md:w-1/2">
+                <p class="text-3xl md:text-6xl font-semibold leading-tight mb-6">O verdadeiro sabor da cozinha italiana
+                </p>
+                <a class="inline-block border border-[#333333] rounded-2xl px-8 py-5 text-xl font-medium hover:bg-[#333333] hover:text-white transition-all"
+                    href="#cardapio">
+                    Veja nosso Cardápio
+                </a>
+            </div>
+            <div class="w-full md:w-1/2 flex justify-center">
+                <a href="./cozinha.html">
+                <img src="./assets/images/bannerpizza.png" alt="Pizzas variadas"
+                    class="w-[90%] max-w-[500px]">
+                    </a>
+            </div>
+        </section>
+
+        <section class="container mx-auto max-w-[980px] mt-24 px-4 py-12 border-t border-dashed border-gray-400"
+            id="cardapio">
+
+            <h2 class="text-center text-4xl font-bold mb-12 uppercase tracking-wide">Cardápio</h2>
+
+            <nav id="nav-categorias" class="overflow-x-auto whitespace-nowrap snap-x flex gap-2 mt-6 pb-1">
+                <div class="animate-pulse flex gap-2">
+                    <div class="h-8 w-20 bg-gray-200 rounded-full"></div>
+                    <div class="h-8 w-20 bg-gray-200 rounded-full"></div>
+                    <div class="h-8 w-20 bg-gray-200 rounded-full"></div>
+                </div>
+            </nav>
+
+            <div id="produtos-container" class="mt-8">
+                <div id="categorias-titulo" class="text-left text-dark font-extrabold text-[22px] mb-4">
+                    Carregando...
+                </div>
+                <div id="lista-produtos" class="grid grid-cols-2 gap-4">
+                    </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer id="contato" class="mt-24 bg-[#333333] text-white p-12 text-center">
+        <h3 class="text-2xl font-bold mb-4"> Goes Pizzaria </h3>
+        <address class="not-italic text-sm text-gray-300 space-y-2">
+            <p>Rua Prof. Toledo, 500, Centro - Sorocaba</p>
+            <p>Whatsapp: (15) 98765-4321</p>
+        </address>
+        <p class="mt-6"><small class="text-gray-400">Aberto todos os dias das 14h às 23h</small></p>
+    </footer>
+
+    <a href="https://wa.me/5515987654321" class="fixed bottom-5 right-5 z-50 transition-transform hover:scale-110"
+        target="_blank">
+        <img src="./assets/images/whatsapp.png" alt="WhatsApp" class="h-14 w-14">
+    </a>
+
+    <div id="detalhes-modal"
+        class="fixed inset-0 bg-black/70 z-[80] flex justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-white w-full max-w-[400px] rounded-[30px] overflow-hidden transform scale-95 transition-transform duration-300 relative flex flex-col"
+            id="detalhes-modal-content">
+
+            <button onclick="fecharModalDetalhes()"
+                class="absolute top-4 right-4 bg-white/80 backdrop-blur-md text-dark w-10 h-10 rounded-full flex justify-center items-center font-bold text-2xl shadow-sm z-10 hover:text-primary active:scale-90 transition-all">&times;</button>
+
+            <div class="w-full h-[280px] bg-gray-50 flex justify-center items-center p-8 relative">
+                <div class="absolute inset-0 bg-gradient-to-b from-gray-100 to-white opacity-50"></div>
+                <img id="detalhes-img" src="" alt="Produto"
+                    class="w-full h-full object-contain drop-shadow-xl relative z-10 transition-transform duration-500 hover:scale-105">
+            </div>
+
+            <div class="p-6">
+                <h2 id="detalhes-nome" class="text-3xl font-black text-dark mb-1 leading-tight tracking-tight">Nome do
+                    Produto</h2>
+                <p id="detalhes-preco" class="text-2xl font-black text-primary mb-4 drop-shadow-sm">R$ 0,00</p>
+                <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                    <p id="detalhes-desc" class="text-gray-600 text-sm leading-relaxed font-medium">Descrição detalhada
+                        do produto vai aqui...</p>
+                </div>
+
+                <button id="detalhes-btn-add"
+                    class="w-full bg-gradient-to-r from-primary to-[#a82d2f] text-white py-4 rounded-xl text-[17px] font-extrabold shadow-[0_8px_20px_-6px_rgba(202,60,63,0.5)] hover:shadow-[0_8px_25px_-4px_rgba(202,60,63,0.6)] active:scale-[0.98] transition-all outline-none flex justify-center items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Adicionar ao Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="carrinho-footer"
+        class="fixed bottom-0 left-0 w-full bg-primary text-white p-4 z-50 shadow-[0_-4px_6px_rgba(0,0,0,0.1)] transform translate-y-full transition-transform duration-300 flex justify-between items-center cursor-pointer"
+        onclick="abrirModalCarrinho()">
+        <div>
+            <p class="text-sm font-medium">Resumo do Pedido</p>
+            <p class="text-xl font-bold">Total: <span id="carrinho-total">R$ 0,00</span></p>
+        </div>
+        <button class="bg-white text-primary px-4 py-2 rounded-lg font-bold shadow-md active:scale-95 transition-all">
+            Ver Carrinho
+        </button>
+    </div>
+
+    <div id="carrinho-modal"
+        class="fixed inset-0 bg-black/60 z-[60] flex flex-col justify-end sm:justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+
+        <div class="bg-white w-full sm:w-[500px] h-[85vh] sm:h-auto sm:max-h-[85vh] rounded-t-3xl sm:rounded-2xl flex flex-col transform translate-y-full sm:translate-y-0 sm:scale-95 transition-transform duration-300"
+            id="carrinho-modal-content">
+
+            <div class="p-5 border-b flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-dark">Seu Carrinho</h2>
+                <button onclick="fecharModalCarrinho()"
+                    class="text-3xl font-bold text-muted hover:text-dark focus:outline-none">&times;</button>
+            </div>
+
+            <div id="carrinho-itens-container" class="p-5 flex-1 overflow-y-auto flex flex-col gap-4">
+                </div>
+
+            <div class="p-5 border-t bg-gray-50 rounded-b-3xl sm:rounded-b-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-bold">Total do Pedido:</span>
+                    <span id="modal-carrinho-total" class="text-2xl font-black text-primary">R$ 0,00</span>
+                </div>
+
+                <input type="text" id="cliente-nome" placeholder="Seu Nome Completo" class="w-full mb-3 p-3 border border-gray-300 rounded-lg outline-none focus:border-primary">
+                <input type="text" id="cliente-endereco" placeholder="Endereço de Entrega (Rua, Número, Bairro)" class="w-full mb-4 p-3 border border-gray-300 rounded-lg outline-none focus:border-primary">
+
+                <button onclick="fecharPedido()" id="btn-fechar-pedido"
+                    class="w-full bg-primary text-white py-3 rounded-xl text-lg font-bold shadow-lg hover:bg-red-700 active:scale-95 transition-all">
+                    Fechar Pedido (Usar GPS)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.style.right = '0';
+        });
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.style.right = '-100%';
+        });
+    </script>
+
+    <script>
+        // ATENÇÃO: Valores do seu projeto no Supabase
+        const supabaseUrl = 'https://lqvwazdhmecegrkgocwb.supabase.co';
+        const supabaseKey = 'sb_publishable_T26HHOWw12h55lQZDLgQkA_IpePrCpP';
+        
+        // CORREÇÃO 1: Usando window.supabase para evitar conflitos e nomeando como supabaseClient
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const navCategorias = document.getElementById('nav-categorias');
+        const listaProdutos = document.getElementById('lista-produtos');
+        const categoriaTitulo = document.getElementById('categorias-titulo');
+
+        let categoriasData = [];
+        let categoriaAtivaId = null;
+
+        async function carregarCategorias() {
+            try {
+                // CORREÇÃO 2: Agora usando supabaseClient
+                const { data, error } = await supabaseClient
+                    .from('categorias')
+                    .select('*')
+                    .order('criado_em', { ascending: true });
+                
+                if (error) throw error;
+
+                categoriasData = data || [];
+                renderizarBotoesCategorias();
+                
+                if (categoriasData.length > 0) {
+                    selecionarCategoria(categoriasData[0].id, categoriasData[0].nome);
+                } else {
+                    navCategorias.innerHTML = '<p class="text-gray-400 text-sm">Nenhuma categoria cadastrada.</p>';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar categorias:', error);
+                navCategorias.innerHTML = '<p class="text-red-500 text-sm">Erro ao carregar menu.</p>';
+            }
+        }
+
+        function renderizarBotoesCategorias() {
+            navCategorias.innerHTML = '';
+            categoriasData.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'snap-start px-4 py-1 rounded-full font-bold text-sm transition-all duration-150 cursor-pointer flex-shrink-0 btn-cat bg-[#ebebeb] text-[#222222]';
+                btn.innerText = cat.nome;
+                btn.dataset.id = cat.id;
+                btn.onclick = () => selecionarCategoria(cat.id, cat.nome);
+                navCategorias.appendChild(btn);
+            });
+        }
+
+        async function selecionarCategoria(id, nome) {
+            categoriaAtivaId = id;
+            categoriaTitulo.innerText = nome;
+
+            const botoes = document.querySelectorAll('.btn-cat');
+            botoes.forEach(btn => {
+                if (btn.dataset.id == id) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('bg-[#ebebeb]', 'text-[#222222]');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-[#ebebeb]', 'text-[#222222]');
+                }
+            });
+
+            await carregarProdutos(id);
+        }
+
+       async function carregarProdutos(categoriaId) {
+            listaProdutos.innerHTML = `
+                <div class="col-span-2 py-10 flex justify-center w-full">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                </div>
+            `;
+            
+            try {
+                // CORREÇÃO 3: Também usa supabaseClient e busca pela categoria_id correta
+                const { data: produtos, error } = await supabaseClient
+                    .from('produtos')
+                    .select('*')
+                    .eq('categoria_id', categoriaId);
+                    
+                if (error) {
+                    console.error("Erro devolvido pelo Supabase:", error);
+                    throw error;
+                }
+
+                renderizarProdutos(produtos || []);
+            } catch (error) {
+                console.error('Falha ao carregar produtos:', error);
+                listaProdutos.innerHTML = '<p class="col-span-2 text-red-500 text-center text-sm py-4">Erro ao carregar produtos. Verifique o console (F12).</p>';
+            }
+        }
+
+        function renderizarProdutos(produtos) {
+            listaProdutos.innerHTML = '';
+
+            if (!produtos || produtos.length === 0) {
+                listaProdutos.innerHTML = '<p class="col-span-2 text-gray-500 font-bold text-center py-8">Nenhum produto cadastrado nesta categoria.</p>';
+                return;
+            }
+
+            produtos.forEach(produto => {
+                const precoNum = Number(produto.preco);
+                const precoFormatado = precoNum.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                const nomeSafe = produto.nome.replace(/'/g, "\\'");
+                const descSafe = (produto.descricao || '').replace(/'/g, "\\'");
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-[20px] p-3 shadow-sm border border-gray-100 relative flex flex-col hover:shadow-md transition-shadow group';
+
+                card.innerHTML = `
+                    <div class="absolute inset-0 z-0 cursor-pointer"
+                        onclick="abrirModalDetalhes('${nomeSafe}', ${precoNum}, '${descSafe}', '${produto.imagem || ''}', '${produto.id}')">
+                    </div>
+
+                    <button class="absolute top-3 right-3 text-gray-300 hover:text-primary transition-colors z-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                        </svg>
+                    </button>
+
+                    <img src="${produto.imagem || ''}" alt="${produto.nome}"
+                        class="w-full h-24 object-contain mb-2 mt-2 transition-transform duration-300 drop-shadow-sm group-hover:scale-105 pointer-events-none relative z-10"
+                        onerror="this.style.display='none'">
+
+                    <div class="text-left w-full mt-auto relative z-10 pointer-events-none">
+                        <h4 class="font-bold text-dark text-sm leading-tight">${produto.nome}</h4>
+                        <p class="text-primary font-black text-lg leading-none mt-1">${precoFormatado}</p>
+                    </div>
+
+                    <button onclick="adicionarItem('${produto.id}', '${nomeSafe}', ${precoNum})"
+                        class="w-full bg-primary text-white py-2 rounded-xl text-xs font-bold mt-3 shadow-md hover:bg-red-700 active:scale-95 transition-all z-10 relative">
+                        Adicionar ao Pedido
+                    </button>
+                `;
+
+                listaProdutos.appendChild(card);
+            });
+        }
+
+        carregarCategorias();
+    </script>
+
+    <script>
+        const modalDetalhes = document.getElementById('detalhes-modal');
+        const modalDetalhesContent = document.getElementById('detalhes-modal-content');
+
+        function abrirModalDetalhes(nome, preco, desc, img, id) {
+            if (navigator.vibrate) navigator.vibrate(40);
+
+            document.getElementById('detalhes-nome').innerText = nome;
+            document.getElementById('detalhes-preco').innerText = preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('detalhes-desc').innerText = desc;
+            document.getElementById('detalhes-img').src = img;
+            document.getElementById('detalhes-btn-add').onclick = function () {
+                adicionarItem(id, nome, preco);
+                fecharModalDetalhes();
+            };
+
+            modalDetalhes.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                modalDetalhesContent.classList.remove('scale-95');
+                modalDetalhesContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        const API_URL = 'https://aula-7-vercel-pizza.vercel.app/api'
+
+        function fecharModalDetalhes() {
+            modalDetalhesContent.classList.remove('scale-100');
+            modalDetalhesContent.classList.add('scale-95');
+            setTimeout(() => {
+                modalDetalhes.classList.add('opacity-0', 'pointer-events-none');
+            }, 300);
+        }
+
+        let carrinho = [];
+
+        const carrinhoFooter = document.getElementById('carrinho-footer');
+        const carrinhoTotalSpan = document.getElementById('carrinho-total');
+        const modal = document.getElementById('carrinho-modal');
+        const modalContent = document.getElementById('carrinho-modal-content');
+        const itensContainer = document.getElementById('carrinho-itens-container');
+        const modalTotalSpan = document.getElementById('modal-carrinho-total');
+
+        function inicializarCarrinho() {
+            const carrinhoSalvo = localStorage.getItem('haruy_carrinho');
+            if (carrinhoSalvo) {
+                carrinho = JSON.parse(carrinhoSalvo);
+                atualizarInterfaceCart();
+            }
+        }
+
+        function adicionarItem(id, nome, preco) {
+            if (navigator.vibrate) navigator.vibrate(200);
+            const index = carrinho.findIndex(item => item.id === id);
+            if (index !== -1) {
+                carrinho[index].quantidade += 1;
+            } else {
+                carrinho.push({ id, nome, preco, quantidade: 1 });
+            }
+            atualizarCarrinho();
+        }
+
+        function abrirModalCarrinho() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                modalContent.classList.remove('translate-y-full', 'scale-95');
+            }, 10);
+        }
+
+        function fecharModalCarrinho() {
+            modalContent.classList.add('translate-y-full', 'scale-95');
+            setTimeout(() => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }, 300);
+        }
+
+        function aumentarQuantidade(id) {
+            const index = carrinho.findIndex(item => item.id === id);
+            if (index !== -1) {
+                carrinho[index].quantidade += 1;
+                atualizarCarrinho();
+                if (navigator.vibrate) navigator.vibrate(50);
+            }
+        }
+
+        function diminuirQuantidade(id) {
+            const index = carrinho.findIndex(item => item.id === id);
+            if (index !== -1) {
+                if (carrinho[index].quantidade > 1) {
+                    carrinho[index].quantidade -= 1;
+                } else {
+                    carrinho.splice(index, 1);
+                    if (carrinho.length === 0) fecharModalCarrinho();
+                }
+                atualizarCarrinho();
+                if (navigator.vibrate) navigator.vibrate(50);
+            }
+        }
+
+        function atualizarCarrinho() {
+            localStorage.setItem('haruy_carrinho', JSON.stringify(carrinho));
+            atualizarInterfaceCart();
+        }
+
+        function atualizarInterfaceCart() {
+            if (carrinho.length === 0) {
+                carrinhoFooter.classList.add('translate-y-full');
+                return;
+            }
+            const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+            const totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            carrinhoTotalSpan.innerText = totalFormatado;
+            modalTotalSpan.innerText = totalFormatado;
+            carrinhoFooter.classList.remove('translate-y-full');
+            renderizarItensModal();
+        }
+
+        function renderizarItensModal() {
+            if (!itensContainer) return;
+            itensContainer.innerHTML = '';
+            carrinho.forEach(item => {
+                const subTotal = (item.preco * item.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                const precoUnit = item.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                const divItem = document.createElement('div');
+                divItem.className = 'flex justify-between items-center border-b pb-4 mt-2';
+                divItem.innerHTML = `
+                    <div class="flex-1">
+                        <h4 class="font-bold text-lg text-dark">${item.nome}</h4>
+                        <p class="text-sm text-muted">${precoUnit}</p>
+                        <p class="font-bold text-primary mt-1">${subTotal}</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-gray-100 p-2 rounded-xl">
+                        <button onclick="diminuirQuantidade('${item.id}')"
+                            class="w-8 h-8 flex justify-center items-center bg-white rounded-lg font-bold text-xl shadow-sm hover:text-primary active:scale-95 transition-all">-</button>
+                        <span class="font-bold text-lg w-4 text-center">${item.quantidade}</span>
+                        <button onclick="aumentarQuantidade('${item.id}')"
+                            class="w-8 h-8 flex justify-center items-center bg-white rounded-lg font-bold text-xl shadow-sm hover:text-primary active:scale-95 transition-all">+</button>
+                    </div>
+                `;
+                itensContainer.appendChild(divItem);
+            });
+        }
+
+        // Fechar pedido com GPS
+         async function fecharPedido() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+
+            const nome = document.getElementById('cliente-nome').value;
+            const endereco = document.getElementById('cliente-endereco').value;
+
+            if (!nome || !endereco) {
+                alert("Por favor, preencha seu nome e endereço de entrega!");
+                return;
+            }
+
+            const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+            
+            const payloadPedido = {
+                cliente_nome: nome,
+                cliente_endereco: endereco,
+                itens: carrinho,
+                total: total
+            };
+
+            const btnFechar = document.getElementById('btn-fechar-pedido');
+            btnFechar.innerText = "Enviando...";
+            btnFechar.disabled = true;
+            btnFechar.classList.add("opacity-50");
+
+            try {
+                const resposta = await fetch(`${API_URL}/pedidos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payloadPedido)
+                });
+
+                if (!resposta.ok) throw new Error('Erro ao enviar pedido');
+
+                alert("Pedido enviado com sucesso para a cozinha!");
+                
+                // Limpar tudo
+                document.getElementById('cliente-nome').value = '';
+                document.getElementById('cliente-endereco').value = '';
+                carrinho = [];
+                atualizarCarrinho();
+                fecharModalCarrinho();
+            } catch (erro) {
+                console.error(erro);
+                alert("Ops! Ocorreu um problema de conexão. Tente novamente.");
+            } finally {
+                btnFechar.innerText = "Fechar Pedido";
+                btnFechar.disabled = false;
+                btnFechar.classList.remove("opacity-50");
+            }
+        }
+
+        function inicializarCarrinho() {
+            const salvo = localStorage.getItem('haruy_carrinho');
+            if (salvo) {
+                carrinho = JSON.parse(salvo);
+                atualizarCarrinho();
+            }
+        }
+        
+        carregarCategorias();
+        inicializarCarrinho();
+
+        // 🚀 AULA 12: REGISTRANDO O SERVICE WORKER (PARA TRANSFORMAR EM PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Service Worker Registrado no Porto! 🍱', reg))
+                .catch(err => console.error('Erro ao preparar o sushi: ', err));
+            });
+        }
+    </script>
+
+</body>
+</html>
