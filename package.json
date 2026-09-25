@@ -1,20 +1,24 @@
 {
-  "name": "atualizar-seu-app-e-documentar---goes-pizzaria-main",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "gdagdagdao-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@capacitor/android": "^8.5.0",
-    "cors": "^2.8.6"
+    "@supabase/supabase-js": "^2.117.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@capacitor/cli": "^8.5.0",
-    "@capacitor/core": "^8.5.0"
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "vite": "^8.3.0"
   }
 }

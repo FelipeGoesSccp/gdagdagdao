@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goes pizzaria - Melhor pizzaria de brigadeiro tobias 👍</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/manifest.json">
+    <meta name="theme-color" content="#ca3c3f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/assets/images/logopwa.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logopwa.png">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { barlow: ['Barlow', 'sans-serif'] },
+            colors: { primary: '#ca3c3f', dark: '#222222', muted: '#999999', footer: '#333333' },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="font-barlow text-[#222222] overflow-x-hidden m-0 w-screen">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
